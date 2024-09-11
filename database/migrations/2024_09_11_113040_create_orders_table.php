@@ -11,8 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Create the orders table
+        // Each order has an id, a user id (foreign key to the users table), a grand total, a payment method, a payment status, a status, a currency, and a shipping amount
+        // The timestamps (created_at and updated_at) are also included
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->decimal('grand_total', 10, 2)->nullable();
+            $table->string('payment_method')->nullable();
+            $table->string('payment_status')->nullable();
+            $table->enum('status', ['new', 'processing', 'shipped', 'delivered', 'canceled'])->default('new');
+            $table->string('currency')->nullable();
+            $table->decimal('shipping_amount', 10, 2)->nullable();
+            $table->string('shipping_method')->nullable();
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }
