@@ -11,6 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Create the products table
+        // This table stores the products of the application
+        // Each product has an id, a category id, a brand id, a name, a slug, an image, a description, a price, and a boolean indicating if it is active
+        // The timestamps (created_at and updated_at) are also included
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
