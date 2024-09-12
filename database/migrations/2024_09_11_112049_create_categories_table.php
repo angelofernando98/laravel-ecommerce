@@ -21,7 +21,7 @@ return new class extends Migration
             $table ->string('slug')->unique();
             $table->string('image')->nullable();
             $table->boolean('is_active')->default(true);
-            $table->timestamp();
+            $table->timestamp('created_at')->nullable();
         });
     }
 
