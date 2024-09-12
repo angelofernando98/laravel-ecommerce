@@ -72,8 +72,13 @@ class UserResource extends Resource
             ->filters([
                 //
             ])
+            //The actions displayed in each row of the table
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ActionGroup::make([ //Adding three dots and display the actions when you click on the three dots
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
