@@ -19,13 +19,37 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
+    //Write here the things you want to show inside the form
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                //
+                
+                //Textbox for the name
+                Forms\Components\TextInput::make('name')
+                    ->required(),
+
+                //Textbox for the email
+                Forms\Components\TextInput::make('email')
+                    ->label('Email address')
+                    ->email()
+                    ->maxlength(255)
+                    ->unique(ignoreRecord: true)
+                    ->required(),
+
+                //DatePicker for the email_verified_at
+                Forms\Components\DateTimePicker::make('email_verified_at')
+                    ->label('Email Verified At')
+                    ->default(now()),
+
+                //Textbox for the password    
+                Forms\Components\TextInput::make('password')
+                    ->password()
+                    ->dehydrateStateUsing(fn($state) => filled($state))
+                    ->required(fn($livewire) => $livewire instanceof CreateRecord),
             ]);
     }
+
 
     public static function table(Table $table): Table
     {
