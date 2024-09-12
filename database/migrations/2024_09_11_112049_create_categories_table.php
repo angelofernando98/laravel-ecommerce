@@ -11,19 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Create the categories table
-        // This table stores the categories of products.
-        // Each category has a name, a slug, an image, a boolean indicating if it is active
-        // The timestamps (created_at and updated_at).
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table ->string('slug')->unique();
+            $table->string('slug')->unique();
             $table->string('image')->nullable();
             $table->boolean('is_active')->default(true);
-            $table->timestamp('created_at')->nullable();
+            $table->timestamps(); // This adds both `created_at` and `updated_at`
         });
     }
+
 
     /**
      * Reverse the migrations.
