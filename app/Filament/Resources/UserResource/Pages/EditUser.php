@@ -18,6 +18,7 @@ class EditUser extends EditRecord
         ];
     }
 
+    //Hashes and updates the record's password if a new one is provided.
     protected function beforeSave(): void
     {
         $formState = $this->form->getState();

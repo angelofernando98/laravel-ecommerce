@@ -16,32 +16,33 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
+    //Write here the things you want to show inside the user creating form
     public static function form(Form $form): Form
-{
-    return $form
-        ->schema([
-            Forms\Components\TextInput::make('name')
-                ->required(),
+    {
+        return $form
+            ->schema([
+                Forms\Components\TextInput::make('name')
+                    ->required(),
 
-            Forms\Components\TextInput::make('email')
-                ->label('Email address')
-                ->email()
-                ->maxlength(255)
-                ->unique(ignoreRecord: true)
-                ->required(),
+                Forms\Components\TextInput::make('email')
+                    ->label('Email address')
+                    ->email()
+                    ->maxlength(255)
+                    ->unique(ignoreRecord: true)
+                    ->required(),
 
-            Forms\Components\DateTimePicker::make('email_verified_at')
-                ->label('Email Verified At')
-                ->default(now()),
+                Forms\Components\DateTimePicker::make('email_verified_at')
+                    ->label('Email Verified At')
+                    ->default(now()),
 
-            Forms\Components\TextInput::make('password')
-                ->password()
-                ->dehydrateStateUsing(fn($state) => filled($state) ? Hash::make($state) : null)
-                ->required(fn($livewire) => $livewire instanceof Pages\CreateUser),
-        ]);
-}
+                Forms\Components\TextInput::make('password')
+                    ->password()
+                    ->dehydrateStateUsing(fn($state) => filled($state) ? Hash::make($state) : null)
+                    ->required(fn($livewire) => $livewire instanceof Pages\CreateUser),
+            ]);
+    }
 
-
+    //Write here the things you want to show inside the table where the users are listed    
     public static function table(Tables\Table $table): Tables\Table
     {
         return $table
@@ -61,7 +62,7 @@ class UserResource extends Resource
                     ->sortable(),
             ])
             ->actions([
-                Tables\Actions\ActionGroup::make([
+                Tables\Actions\ActionGroup::make([ //Adding three dots and display the actions when you click on the three dots
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make(),
