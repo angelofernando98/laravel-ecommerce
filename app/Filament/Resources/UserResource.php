@@ -19,7 +19,7 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
-    //Write here the things you want to show inside the form
+    //Write here the things you want to show inside the user creating form
     public static function form(Form $form): Form
     {
         return $form
@@ -50,13 +50,25 @@ class UserResource extends Resource
             ]);
     }
 
-
+    //Write here the things you want to show inside the table where the users are listed
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
-                //
-            ])
+        ->columns([
+            Tables\Columns\TextColumn::make('name')
+                ->searchable(),
+
+            Tables\Columns\TextColumn::make('email')
+                ->searchable(),
+
+            Tables\Columns\TextColumn::make('email_verified_at')
+                ->dateTime()
+                ->sortable(),
+
+            Tables\Columns\TextColumn::make('created_at')
+                ->dateTime()
+                ->sortable(),
+        ])
             ->filters([
                 //
             ])
