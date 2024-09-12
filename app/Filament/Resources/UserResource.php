@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Hash;
 
 class UserResource extends Resource
 {
@@ -19,62 +16,52 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
-    //Write here the things you want to show inside the user creating form
     public static function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                
-                //Textbox for the name
-                Forms\Components\TextInput::make('name')
-                    ->required(),
+{
+    return $form
+        ->schema([
+            Forms\Components\TextInput::make('name')
+                ->required(),
 
-                //Textbox for the email
-                Forms\Components\TextInput::make('email')
-                    ->label('Email address')
-                    ->email()
-                    ->maxlength(255)
-                    ->unique(ignoreRecord: true)
-                    ->required(),
+            Forms\Components\TextInput::make('email')
+                ->label('Email address')
+                ->email()
+                ->maxlength(255)
+                ->unique(ignoreRecord: true)
+                ->required(),
 
-                //DatePicker for the email_verified_at
-                Forms\Components\DateTimePicker::make('email_verified_at')
-                    ->label('Email Verified At')
-                    ->default(now()),
+            Forms\Components\DateTimePicker::make('email_verified_at')
+                ->label('Email Verified At')
+                ->default(now()),
 
-                //Textbox for the password    
-                Forms\Components\TextInput::make('password')
-                    ->password()
-                    ->dehydrateStateUsing(fn($state) => filled($state))
-                    ->required(fn($livewire) => $livewire instanceof CreateRecord),
-            ]);
-    }
+            Forms\Components\TextInput::make('password')
+                ->password()
+                ->dehydrateStateUsing(fn($state) => filled($state) ? Hash::make($state) : null)
+                ->required(fn($livewire) => $livewire instanceof Pages\CreateUser),
+        ]);
+}
 
-    //Write here the things you want to show inside the table where the users are listed
-    public static function table(Table $table): Table
+
+    public static function table(Tables\Table $table): Tables\Table
     {
         return $table
-        ->columns([
-            Tables\Columns\TextColumn::make('name')
-                ->searchable(),
+            ->columns([
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
 
-            Tables\Columns\TextColumn::make('email')
-                ->searchable(),
+                Tables\Columns\TextColumn::make('email')
+                    ->searchable(),
 
-            Tables\Columns\TextColumn::make('email_verified_at')
-                ->dateTime()
-                ->sortable(),
+                Tables\Columns\TextColumn::make('email_verified_at')
+                    ->dateTime()
+                    ->sortable(),
 
-            Tables\Columns\TextColumn::make('created_at')
-                ->dateTime()
-                ->sortable(),
-        ])
-            ->filters([
-                //
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable(),
             ])
-            //The actions displayed in each row of the table
             ->actions([
-                Tables\Actions\ActionGroup::make([ //Adding three dots and display the actions when you click on the three dots
+                Tables\Actions\ActionGroup::make([
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make(),
@@ -89,9 +76,7 @@ class UserResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array
