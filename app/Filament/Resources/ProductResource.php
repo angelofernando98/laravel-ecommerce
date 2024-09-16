@@ -49,12 +49,18 @@ class ProductResource extends Resource
                         ->required()
                         ->maxLength(255)
                         ->live(onBlur: true)
+                        
+                        // When creating a new record, automatically set the slug field
+                        // from the provided name. This is done after the state is
+                        // updated, so that any changes to the slug are not overwritten.
                         ->afterStateUpdated(function(string $operation, $state, Set $set) {
                             if ($operation !== 'create') {
                                 return;
                             }
-                                $set('slug', Str::slug($state));
-                            }),
+                            // Use the Str::slug() helper to generate a URL-friendly slug
+                            // from the name field.
+                            $set('slug', Str::slug($state));
+                        }),
 
                     TextInput::make('slug')
                         ->required()
@@ -65,7 +71,8 @@ class ProductResource extends Resource
 
                     MarkdownEditor::make('description')
                         ->columnSpanFull()
-                        ->fileAttachmentsDirectory('products')
+                        // This is the directory where the uploaded product images will be stored.
+                        ->fileAttachmentsDirectory('products')     
                 ])->columns(2),
 
                 Section::make('Images')->schema([
