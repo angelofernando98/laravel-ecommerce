@@ -17,12 +17,12 @@ class Order extends Model
     }
 
     // Get all of the order items for the Order
-    public function Items(){
+    public function items(){
         return $this->hasMany(OrderItem::class);
     }
 
     // Get the address that owns the Order
     public function address(){
-        return $this->belongsTo(Address::class);
+        return $this->hasOne(Address::class);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers;
+use App\Filament\Resources\OrderResource\RelationManagers\AddressRelationManager;
 use App\Models\Order;
 use App\Models\Product;
 use Filament\Forms;
@@ -122,9 +123,9 @@ class OrderResource extends Resource
                             ->relationship('product', 'name') // The relationship is specified as 'product' and the label is set to 'name' so that the product name is shown in the select options.
                             ->searchable()
                             ->preload()
+                            ->required()
                             ->distinct()
                             ->disableOptionsWhenSelectedInSiblingRepeaterItems() // If an item is already selected in another repeater, disable it from being selected again.
-                            ->required()
                             ->columnSpan(4)
                             ->reactive()
                             ->afterStateUpdated(fn ($state, Set $set) => $set('unit_amount', Product::find($state)?->price ?? 0))
@@ -265,7 +266,7 @@ class OrderResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            AddressRelationManager::class
         ];
     }
 

@@ -18,8 +18,9 @@ class Address extends Model
 
     // Get the full address of the user, which is the first name and last name concatenated with a space in between.
     // Example: John Doe
-    public function getFullAddressAttribute(): string
+    public function getFullnameAttribute(): string
     {
         return "{$this->first_name} {$this->last_name}";
     }
+
 }
