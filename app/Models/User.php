@@ -45,4 +45,11 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+
+    //Get all of the orders for the User
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }
