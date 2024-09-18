@@ -7,30 +7,14 @@
             <h2 class="text-2xl font-bold dark:text-gray-400"> Categories</h2>
             <div class="w-16 pb-2 mb-6 border-b border-rose-600 dark:border-gray-400"></div>
             <ul>
-              <li class="mb-4">
-                <label for="" class="flex items-center dark:text-gray-400 ">
-                  <input type="checkbox" class="w-4 h-4 mr-2">
-                  <span class="text-lg">Smartphones</span>
+              @foreach ($categories as $category)
+              <li class="mb-4" wire:key="{{ $category->id }}">
+                <label for="{{ $category->slug }}" class="flex items-center dark:text-gray-400 ">
+                  <input type="checkbox" id="{{ $category->slug }}" value="{{ $category->id }}" class="w-4 h-4 mr-2">
+                  <span class="text-lg">{{ $category->name }}</span>
                 </label>
               </li>
-              <li class="mb-4">
-                <label for="" class="flex items-center dark:text-gray-400 ">
-                  <input type="checkbox" class="w-4 h-4 mr-2 ">
-                  <span class="text-lg">Laptops</span>
-                </label>
-              </li>
-              <li class="mb-4">
-                <label for="" class="flex items-center dark:text-gray-400">
-                  <input type="checkbox" class="w-4 h-4 mr-2">
-                  <span class="text-lg">Smartwatches</span>
-                </label>
-              </li>
-              <li class="mb-4">
-                <label for="" class="flex items-center dark:text-gray-400">
-                  <input type="checkbox" class="w-4 h-4 mr-2">
-                  <span class="text-lg">Television</span>
-                </label>
-              </li>
+              @endforeach
             </ul>
 
           </div>
@@ -38,30 +22,14 @@
             <h2 class="text-2xl font-bold dark:text-gray-400">Brand</h2>
             <div class="w-16 pb-2 mb-6 border-b border-rose-600 dark:border-gray-400"></div>
             <ul>
-              <li class="mb-4">
-                <label for="" class="flex items-center dark:text-gray-300">
-                  <input type="checkbox" class="w-4 h-4 mr-2">
-                  <span class="text-lg dark:text-gray-400">Apple</span>
+              @foreach ($brands as $brand)
+              <li class="mb-4" wire:key="{{ $brand->id }}">
+                <label for="{{ $brand->slug }}" class="flex items-center dark:text-gray-300">
+                  <input type="checkbox" id="{{ $brand->slug }}" value="{{ $brand->id }}" class="w-4 h-4 mr-2">
+                  <span class="text-lg dark:text-gray-400">{{ $brand->name }}</span>
                 </label>
               </li>
-              <li class="mb-4">
-                <label for="" class="flex items-center dark:text-gray-300">
-                  <input type="checkbox" class="w-4 h-4 mr-2">
-                  <span class="text-lg dark:text-gray-400">Samsung</span>
-                </label>
-              </li>
-              <li class="mb-4">
-                <label for="" class="flex items-center dark:text-gray-300">
-                  <input type="checkbox" class="w-4 h-4 mr-2">
-                  <span class="text-lg dark:text-gray-400">Nothing</span>
-                </label>
-              </li>
-              <li class="mb-4">
-                <label for="" class="flex items-center dark:text-gray-300">
-                  <input type="checkbox" class="w-4 h-4 mr-2">
-                  <span class="text-lg dark:text-gray-400">One Plus</span>
-                </label>
-              </li>
+              @endforeach
             </ul>
           </div>
           <div class="p-4 mb-5 bg-white border border-gray-200 dark:bg-gray-900 dark:border-gray-900">
@@ -110,7 +78,7 @@
 
 
             @foreach($products as $product)
-            <div class="w-full px-3 mb-6 sm:w-1/2 md:w-1/3">
+            <div class="w-full px-3 mb-6 sm:w-1/2 md:w-1/3" wire:key="{{ $product->id }}">
               <div class="border border-gray-300 dark:border-gray-700">
                 <div class="relative bg-gray-200">
                   <a href="/products/{{$product->slug}}" class="">
