@@ -54,6 +54,48 @@ class CartManagement
         // return the count of cart items
         return count($cart_items);
     }
+
+
+    // ..::ADD ITEMS TO THE CART WITH QUANTITY::..
+
+    static public function addItemToCartWithQty($product_id, $qty = 1) {
+        // get all cart items from cookie
+        $cart_items = self::getCartItemsFromCookie();
+
+        // check if the product is already in the cart
+        $existing_item = null;
+        foreach($cart_items as $key => $item) {
+            if($item['product_id'] == $product_id) {
+                $existing_item = $key;
+                break;
+            }
+        }
+
+        // if the product is already in the cart
+        if($existing_item !== null) {
+            // increment the quantity and update the total
+            $cart_items[$existing_item]['quantity'] = $qty;
+            $cart_items[$existing_item]['total'] = $cart_items[$existing_item]['quantity'] * $cart_items[$existing_item]['unit_amount'];
+        } else {
+            // add the product to the cart 
+            $product = Product::where('id', $product_id)->first(['id', 'name', 'price','images']);
+            if($product){
+                $cart_items[] = [
+                    'product_id' => $product->id,
+                    'name' => $product->name,
+                    'image' => $product->images,
+                    'quantity' => $qty,
+                    'unit_amount' => $product->price,
+                    'total_amout' => $product->price
+                ];
+            }
+        }
+
+        // add the cart items to the cookie
+        self::addCartItemsToCookie($cart_items);
+        // return the count of cart items
+        return count($cart_items);
+    }
     
 
     

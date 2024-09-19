@@ -37,7 +37,7 @@ class ProductDetailPage extends Component
     // This method adds a product to the cart and then updates the cart count in the navbar
     public function addToCart($product_id) {
         // Get the total count of items in the cart after adding the product
-        $total_count = CartManagement::addItemToCart($product_id);
+        $total_count = CartManagement::addItemToCartWithQty($product_id, $this->quantity);
 
         // Dispatch an event to the navbar component to update the cart count
         // This is done using the Livewire `dispatch` method.
